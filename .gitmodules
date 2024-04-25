@@ -1,6 +1,6 @@
 [submodule "vacapp_web"]
-	path = vacapp_web
+	path = web
 	url = https://github.com/joseilagosb/vacapp_web.git
 [submodule "vacapp_backend"]
-	path = vacapp_backend
+	path = backend
 	url = https://github.com/joseilagosb/vacapp_backend.git
