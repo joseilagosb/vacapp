@@ -1,9 +1,20 @@
 version: "3.8"
 
 services:
+  vacapp-db:
+    image: "postgres:16.2-alpine"
+    container_name: vacapp-db
+    restart: unless-stopped
+    volumes:
+      - vacapp-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
   vacapp-backend:
     build:
       context: ./backend
+      dockerfile: dev.Dockerfile
     container_name: vacapp-backend
     restart: unless-stopped
     volumes:
@@ -13,6 +24,8 @@ services:
       - 3000:3000
     depends_on:
       - vacapp-db
+    env_file:
+      - .env
   vacapp-web:
     build:
       context: ./web
@@ -23,15 +36,9 @@ services:
       - ./web:/app
       - /app/node_modules
     ports:
-      - 4000:4000
-  vacapp-db:
-    image: "postgres:16.2-alpine"
-    container_name: vacapp-db
-    restart: unless-stopped
-    volumes:
-      - vacapp-data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+      - 4000:3000
+    depends_on:
+      - vacapp-backend
     env_file:
       - .env
 
