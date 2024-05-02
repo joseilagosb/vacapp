@@ -8,7 +8,7 @@ services:
     volumes:
       - vacapp-data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - ${DB_PORT:-5432}:5432
     env_file:
       - .env
   vacapp-backend:
@@ -21,7 +21,7 @@ services:
       - ./backend:/app
       - /app/node_modules
     ports:
-      - 3000:3000
+      - ${BACKEND_PORT:-3000}:3000
     depends_on:
       - vacapp-db
     env_file:
@@ -36,7 +36,7 @@ services:
       - ./web:/app
       - /app/node_modules
     ports:
-      - 4000:3000
+      - ${WEB_PORT:-4000}:3000
     depends_on:
       - vacapp-backend
     env_file:
